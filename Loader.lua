@@ -2,7 +2,7 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-local API = "https://script.google.com/macros/s/AKfycbw6nkv47LmFiaOOF8uA1LZcUyM_sxkEbY1QW73bVXw4elBqTtPkilE8kxSni5OSkAfb/exec"
+local API = "https://script.google.com/macros/s/AKfycbzo1UQy_Gw69M-EzrJrXgKSdocvEqdZtjyOt6IqAHHG5e0_LbvZ3qQ16eOvt6_Ue5_l/exec"
 local _KEY = getgenv().key or ""
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 
