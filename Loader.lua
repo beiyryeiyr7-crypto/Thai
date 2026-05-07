@@ -12,7 +12,7 @@ local function Auth()
     
     if success then
         if res == "SUCCESS" then
-            local p_url = "https://raw.githubusercontent.com/beiryreiyr7-crypto/Thai/main/Payload.txt"
+            local p_url = "https://raw.githubusercontent.com/beiyryeiyr7-crypto/Thai/refs/heads/main/Payload.txt"
             local s, data = pcall(function() return game:HttpGet(p_url) end)
             if s and data then
                 local func, err = loadstring(HttpService:Base64Decode(data))
