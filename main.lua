@@ -1,5 +1,5 @@
 -- [[ 🛡️ BEER HUB : MAIN SCRIPT (GITHUB) ]] --
-local API_URL = "https://script.google.com/macros/s/AKfycbw6nkv47LmFiaOOF8uA1LZcUyM_sxkEbY1QW73bVXw4elBqTtPkilE8kxSni5OSkAfb/exec"
+local API_URL = "https://script.google.com/macros/s/AKfycbzjXI8PnPYlCjaJgviunZaFj43Ehkw7xMncq2KC2jsCUmB4t3pL_R7SQfPo6PoU5Boc/exec"
 local L_Player = game:GetService("Players").LocalPlayer
 
 local function Verify(key)
