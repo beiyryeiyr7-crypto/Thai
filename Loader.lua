@@ -1,30 +1,36 @@
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local API_URL = "https://script.google.com/macros/s/AKfycbwRWt-1x0INeV2XnOMA13Avbcizk9CCLFEbnQJEt-TggvLCwRdusPF5fXrdX1XhBroe/exec"
 
-local API = "https://script.google.com/macros/s/AKfycbwRWt-1x0INeV2XnOMA13Avbcizk9CCLFEbnQJEt-TggvLCwRdusPF5fXrdX1XhBroe/exec"
-local _KEY = getgenv().key or ""
+local HttpService = game:GetService("HttpService")
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
 
-local function Auth()
-    local url = API.."?key="..HttpService:UrlEncode(_KEY).."&hwid="..HttpService:UrlEncode(HWID)
-    local success, res = pcall(function() return game:HttpGet(url) end)
-    
-    if success then
-        if res == "SUCCESS" then
-            local p_url = "https://raw.githubusercontent.com/beiyryeiyr7-crypto/Thai/refs/heads/main/Payload.txt"
-            local s, data = pcall(function() return game:HttpGet(p_url) end)
-            if s and data then
-                local func, err = loadstring(HttpService:Base64Decode(data))
-                if func then func() else warn("LoadError: "..tostring(err)) end
-            else
-                LocalPlayer:Kick("Fetch Error")
-            end
-        else
-            LocalPlayer:Kick("Auth Failed: "..tostring(res))
-        end
-    else
-        LocalPlayer:Kick("Server Offline")
-    end
+local function checkKey(key)
+    local url = API_URL .. "?auth=" .. key .. "&hwid=" .. HWID
+    -- Using game:HttpGet for better stability on Delta/Mobile executors
+    local success, response = pcall(function()
+        return game:HttpGet(https://raw.githubusercontent.com/beiyryeiyr7-crypto/Thai/refs/heads/main/Payload.txt)
+    end)
+    return success, response
 end
-Auth()
+
+-- Example usage for your LOGIN button
+local inputKey = "ENTER_KEY_HERE"
+local success, response = checkKey(inputKey)
+
+if success then
+    if response ~= "FAILED" and response ~= "HWID_MISMATCH" then
+        print("Authentication Success!")
+        -- Executing the obfuscated code received from the server
+        local run, err = loadstring(response)
+        if run then
+            run()
+        else
+            warn("Execution Error: " .. tostring(err))
+        end
+    elseif response == "HWID_MISMATCH" then
+        print("Error: Key is locked to another device.")
+    else
+        print("Error: Invalid Key.")
+    end
+else
+    print("Connection Failed! Check your internet or Script Deployment settings.")
+end
