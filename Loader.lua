@@ -1,4 +1,4 @@
-local API_URL = "https://script.google.com/macros/s/AKfycbwRWt-1x0INeV2XnOMA13Avbcizk9CCLFEbnQJEt-TggvLCwRdusPF5fXrdX1XhBroe/exec"
+local API_URL = "https://script.google.com/macros/s/AKfycbz-EnqusNt0U4wYPj5H57n09DxQDtZUS5RU21kyiHKvQa919QzJvNNvSvgBrk8FWNwr/exec"
 
 local HttpService = game:GetService("HttpService")
 local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
