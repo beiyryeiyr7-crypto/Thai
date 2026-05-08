@@ -5,7 +5,14 @@ local API_URL = "https://script.google.com/macros/s/AKfycbwOwX49ODHPB1UVJB6y5JRn
 local PAYLOAD_URL = "https://raw.githubusercontent.com/beiyryeiyr7-crypto/Thai/refs/heads/main/Payload.txt"
 
 local player = Players.LocalPlayer
-local hwid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+-- แก้ปัญหา Error บรรทัดที่ 6 (GetClientId)
+local success_hwid, hwid = pcall(function() 
+    return game:GetService("RbxAnalyticsService"):GetClientId() 
+end)
+if not success_hwid or not hwid then
+    hwid = "Mobile-" .. player.UserId
+end
 
 local function checkKey(key)
     local success, response = pcall(function()
@@ -22,11 +29,10 @@ local function checkKey(key)
     end)
     
     if not decodeSuccess then return false end
-    
     return data.success == true
 end
 
--- UI
+-- UI Setup
 local sg = Instance.new("ScreenGui")
 sg.ResetOnSpawn = false
 sg.Parent = player:WaitForChild("PlayerGui")
@@ -67,13 +73,21 @@ btn.Font = Enum.Font.GothamBold
 btn.Parent = frame
 
 btn.MouseButton1Click:Connect(function()
-    local key = keybox.Text:match("^%s*(.-)%s*$")
-    if key and key \~= "" then
+    local key = keybox.Text:gsub("%s+", "") -- ลบช่องว่างออกอัตโนมัติ
+    if key ~= "" then
+        btn.Text = "Checking..."
         if checkKey(key) then
+            btn.Text = "Success!"
+            task.wait(1)
+            sg:Destroy()
             local s, payload = pcall(function() return game:HttpGet(PAYLOAD_URL) end)
             if s then
-                pcall(function() loadstring(payload)() end)
+                loadstring(payload)()
             end
+        else
+            btn.Text = "Invalid Key!"
+            task.wait(1)
+            btn.Text = "Submit"
         end
     end
 end)
