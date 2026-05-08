@@ -1,7 +1,7 @@
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 
-local API_URL = "https://script.google.com/macros/s/AKfycbwOwX49ODHPB1UVJB6y5JRnLSeB_FHM8mYr_d5Y6MC8Af0eQH5N9wnAHPl6JWhKSKRo/exec"
+local API_URL = "https://script.google.com/macros/s/AKfycbynhHDx-x8cZwkY9jtaKS_fAtq7_KLfaohbV4eRQ462GT51V1teXi7fsNFD59PViJ8x/exec"
 local PAYLOAD_URL = "https://raw.githubusercontent.com/beiyryeiyr7-crypto/Thai/refs/heads/main/Payload.txt"
 
 local player = Players.LocalPlayer
